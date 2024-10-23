@@ -78,7 +78,13 @@
             "development": {
               "optimization": false,
               "extractLicenses": false,
-              "sourceMap": true
+              "sourceMap": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/enviroments/environment.development.ts"
+                }
+              ]
             }
           },
           "defaultConfiguration": "production"
@@ -119,11 +125,43 @@
             ],
             "scripts": []
           }
+        },
+        "cypress-run": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "devServerTarget": "e-agenda:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "e-agenda:serve:production"
+            }
+          }
+        },
+        "cypress-open": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "watch": true,
+            "headless": false
+          }
+        },
+        "e2e": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "devServerTarget": "e-agenda:serve",
+            "watch": true,
+            "headless": false
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "e-agenda:serve:production"
+            }
+          }
         }
       }
     }
   },
   "cli": {
-    "analytics": "20abb6fb-3612-462c-a51c-ec43db3dcdef"
+    "analytics": "20abb6fb-3612-462c-a51c-ec43db3dcdef",
+    "schematicCollections": ["@schematics/angular", "@cypress/schematic"]
   }
 }
