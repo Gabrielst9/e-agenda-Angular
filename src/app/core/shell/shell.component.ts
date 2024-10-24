@@ -1,5 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { AsyncPipe, NgForOf, NgIf } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
@@ -12,6 +11,8 @@ import { RouterLink, RouterOutlet } from '@angular/router';
 import { LinkNavegacao } from './models/link-navegacao.model';
 import { UsuarioTokenViewModel } from '../auth/models/auth.model';
 import { MatMenuModule } from '@angular/material/menu';
+
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-shell',
@@ -55,11 +56,18 @@ export class ShellComponent {
       icone: 'home',
       rota: '/dashboard',
     },
+    {
+      titulo: 'Contatos',
+      icone: 'people',
+      rota: '/contatos',
+    },
   ];
 
   isHandset$: Observable<boolean>;
 
-  constructor(private breakpointObserver: BreakpointObserver) {
+  private breakpointObserver = inject(BreakpointObserver);
+
+  constructor() {
     this.isHandset$ = this.breakpointObserver
       .observe([Breakpoints.XSmall, Breakpoints.Small, Breakpoints.Tablet])
       .pipe(

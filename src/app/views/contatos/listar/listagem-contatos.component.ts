@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { ListarContatoViewModel } from '../models/contato.models';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { AsyncPipe, NgForOf, NgIf } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
@@ -27,11 +27,11 @@ import { MatDividerModule } from '@angular/material/divider';
   templateUrl: './listagem-contatos.component.html',
 })
 export class ListagemContatosComponent implements OnInit {
-  contatos$: Observable<ListarContatoViewModel[]>;
-  constructor(private contatoService: ContatoService) {
-    this.contatos$ = of([]);
-  }
+  contatos: ListarContatoViewModel[] = [];
+
+  constructor(private route: ActivatedRoute) {}
+
   ngOnInit(): void {
-    this.contatos$ = this.contatoService.selecionarTodos();
+    this.contatos = this.route.snapshot.data['contatos'];
   }
 }
