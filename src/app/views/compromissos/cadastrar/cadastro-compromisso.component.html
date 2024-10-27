@@ -1,0 +1,142 @@
+<main class="container my-5">
+  <div class="row justify-content-center g-3 mt-2">
+    <div class="col col-md-10 col-lg-6">
+      <h1 class="display-3">Cadastro de Compromisso</h1>
+
+      <hr />
+
+      <form [formGroup]="form" (submit)="gravar()">
+        <mat-form-field class="w-100 mt-5" appearance="fill">
+          <mat-label>Assunto</mat-label>
+          <input
+            matInput
+            formControlName="assunto"
+            autocomplete="assunt"
+            placeholder="Ex: Reunião"
+            [maxLength]="30"
+          />
+          <mat-icon matSuffix color="primary">app_registration</mat-icon>
+          <mat-error class="text-white" *ngIf="assunto?.invalid">
+            <span *ngIf="assunto?.errors?.['required']"
+              >O assunto precisa ser preenchido.</span
+            >
+            <span *ngIf="assunto?.errors?.['minlength']"
+              >O assunto deve conter ao menos 3 caracteres.</span
+            >
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="w-100 mt-5" appearance="fill">
+          <mat-label>Data do Evento</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            formControlName="data"
+            placeholder="DD/MM/YYYY"
+          />
+
+          <mat-datepicker-toggle matIconSuffix [for]="picker">
+            <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+          </mat-datepicker-toggle>
+
+          <mat-datepicker #picker></mat-datepicker>
+
+          <mat-error class="text-white" *ngIf="data?.invalid">
+            <span *ngIf="data?.errors?.['required']">A data precisa ser preenchida.</span>
+          </mat-error>
+        </mat-form-field>
+
+
+        <mat-form-field class="w-100 mt-3" appearance="fill">
+          <mat-label>Hora de Início</mat-label>
+          <input
+            matInput
+            type="time"
+            formControlName="horaInicio"
+            placeholder="Ex: HH:MM"
+          />
+
+          <mat-icon matSuffix color="primary">hourglass_top</mat-icon>
+          <mat-error class="text-white" *ngIf="horaInicio?.invalid">
+            <span *ngIf="horaInicio?.errors?.['required']"
+              >O horário precisa ser preenchido</span
+            >
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="w-100 mt-3" appearance="fill">
+          <mat-label>Hora de Término</mat-label>
+          <input
+            matInput
+            type="time"
+            formControlName="horaTermino"
+            placeholder="Ex: HH:MM"
+          />
+
+          <mat-icon matSuffix color="primary">hourglass_bottom</mat-icon>
+          <mat-error class="text-white" *ngIf="horaInicio?.invalid">
+            <span *ngIf="horaInicio?.errors?.['required']"
+              >O horário precisa ser preenchido.</span
+            >
+          </mat-error>
+        </mat-form-field>
+
+        <!-- <mat-form-field class="w-100 mt-3" appearance="fill">
+          <mat-label>Empresa</mat-label>
+          <input
+            matInput
+            formControlName="empresa"
+            autocomplete="organization"
+            placeholder="Ex: Academia do Programador"
+            [maxLength]="30"
+          />
+          <mat-icon matSuffix color="primary">corporate_fare</mat-icon>
+          <mat-error class="text-white" *ngIf="empresa?.invalid">
+            <span *ngIf="empresa?.errors?.['required']"
+              >A empresa precisa ser preenchida.</span
+            >
+            <span *ngIf="empresa?.errors?.['minlength']"
+              >A empresa deve conter ao menos 3 caracteres.</span
+            >
+          </mat-error>
+        </mat-form-field> -->
+
+        <!-- <mat-form-field class="w-100 mt-3" appearance="fill">
+          <mat-label>Cargo</mat-label>
+          <input
+            matInput
+            formControlName="cargo"
+            autocomplete="organization-title"
+            placeholder="Ex: Professor"
+            [maxLength]="30"
+          />
+          <mat-icon matSuffix color="primary">work</mat-icon>
+          <mat-error class="text-white" *ngIf="cargo?.invalid">
+            <span *ngIf="cargo?.errors?.['required']"
+              >O cargo precisa ser preenchido.</span
+            >
+            <span *ngIf="cargo?.errors?.['minlength']"
+              >O cargo deve conter ao menos 3 caracteres.</span
+            >
+          </mat-error>
+        </mat-form-field> -->
+
+        <div class="row justify-content-end g-2 gap-2 mt-3">
+          <button type="submit" mat-flat-button class="col-sm-4">
+            <mat-icon matIconPrefix>check</mat-icon>
+            Gravar
+          </button>
+          <a
+            mat-button
+            type="button"
+            class="col-sm-4"
+            routerLink="/contatos/listar"
+          >
+            <mat-icon matIconPrefix>keyboard_return</mat-icon>
+            Voltar
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+</main>

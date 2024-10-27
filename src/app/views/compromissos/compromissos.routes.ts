@@ -3,6 +3,7 @@ import { ListagemCompromissoComponent } from "./listar/listagem-compromisso.comp
 import { ListarCompromissoViewModel } from "./models/compromisso.models";
 import { CompromissoService } from "./services/compromisso.service";
 import { inject } from "@angular/core";
+import { CadastroCompromissoComponent } from "./cadastrar/cadastro-compromisso.component";
 
 const listagemCompromissosResolver: ResolveFn<ListarCompromissoViewModel[]> = () => {
   return inject(CompromissoService).selecionarTodos();
@@ -17,6 +18,8 @@ export const compromissosRoutes: Routes = [
       compromissos: listagemCompromissosResolver,
     },
   },
+  { path: 'cadastrar', component: CadastroCompromissoComponent },
+
 ];
 
 

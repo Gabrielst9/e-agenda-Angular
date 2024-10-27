@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { LocalStorageService } from "../../../core/auth/services/local-storage.service";
 import { environment } from "../../../../enviroments/environment";
-import { ListarCompromissoViewModel } from "../models/compromisso.models";
+import { CompromissoInseridoViewModel, InserirCompromissoViewModel, ListarCompromissoViewModel } from "../models/compromisso.models";
 import { catchError, EMPTY, map, Observable, of, throwError } from "rxjs";
 
 @Injectable({
@@ -15,6 +15,15 @@ export class CompromissoService {
     private http: HttpClient,
     private localStorageService: LocalStorageService
   ) {}
+
+
+  public inserir(
+    inserirCompromissoVm: InserirCompromissoViewModel
+  ): Observable<CompromissoInseridoViewModel> {
+    return this.http
+      .post<CompromissoInseridoViewModel>(this.url, inserirCompromissoVm)
+      .pipe(map(this.processarDados), catchError(this.processarFalha));
+  }
 
   public selecionarTodos(): Observable<ListarCompromissoViewModel[]> {
     return this.http
