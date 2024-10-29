@@ -8,6 +8,7 @@
           </h1>
           <mat-divider class="my-3"></mat-divider>
           <h3 mat-card-subtitle>Seja bem-vindo(a)!</h3>
+
           <p>
             Organize sua rotina de maneira eficiente e simplificada com o
             e-Agenda, sua plataforma centralizada para gerenciar tarefas,
@@ -15,16 +16,19 @@
             uma interface intuitiva e funcionalidades otimizadas para sua
             produtividade.
           </p>
+
           <p>
             Com o e-Agenda, você terá todas as ferramentas necessárias para
             simplificar sua rotina e otimizar seu tempo. Vamos começar?
           </p>
         </mat-card-content>
       </mat-card>
+
       <div class="row g-3 mt-2">
         <div *ngFor="let item of itensRedirect" class="col-md-4">
           <a
             [routerLink]="item.rota"
+            [attr.data-cy]="'botao' + item.texto"
             class="botao-redirecionamento w-100"
             mat-fab
             extended

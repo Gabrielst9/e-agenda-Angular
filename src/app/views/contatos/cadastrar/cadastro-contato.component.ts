@@ -111,7 +111,7 @@ export class CadastroContatoComponent {
 
   private processarSucesso(contato: ContatoInseridoViewModel): void {
     this.notificacaoService.sucesso(
-      `Contato ${contato.nome} cadastrado com sucesso!`
+      `Contato "${contato.nome}" cadastrado com sucesso!`
     );
 
     this.router.navigate(['/contatos', 'listar']);
