@@ -1,59 +1,72 @@
+import { ListarContatoViewModel } from '../../contatos/models/contato.models';
+
+export enum TipoLocalizacaoCompromissoEnum {
+  Remoto,
+  Presencial,
+}
+
 export interface InserirCompromissoViewModel {
   assunto: string;
-  data: string;
+  tipoLocal: TipoLocalizacaoCompromissoEnum;
+  local?: string;
+  link?: string;
+  data: Date;
   horaInicio: string;
-  horaTermino: Date;
-  local: string;
-  link: string;
-  contato: string;
+  horaTermino: string;
+  contatoId?: string;
 }
 
 export interface CompromissoInseridoViewModel {
-  id: string;
   assunto: string;
-  data: string;
+  tipoLocal: TipoLocalizacaoCompromissoEnum;
+  local?: string;
+  link?: string;
+  data: Date;
   horaInicio: string;
-  horaTermino: Date;
-  local: string;
-  link: string;
-  contato: string;
+  horaTermino: string;
+  contatoId?: string;
 }
 
-// export interface EditarCompromissoViewModel {
-//   nome: string;
-//   email: string;
-//   telefone: string;
-//   empresa: string;
-//   cargo: string;
-// }
+export interface EditarCompromissoViewModel {
+  assunto: string;
+  tipoLocal: TipoLocalizacaoCompromissoEnum;
+  local?: string;
+  link?: string;
+  data: Date;
+  horaInicio: string;
+  horaTermino: string;
+  contatoId?: string;
+}
 
-// export interface CompromissoEditadoViewModel {
-//   id: string;
-//   nome: string;
-//   email: string;
-//   telefone: string;
-//   empresa: string;
-//   cargo: string;
-// }
+export interface CompromissoEditadoViewModel {
+  assunto: string;
+  tipoLocal: TipoLocalizacaoCompromissoEnum;
+  local?: string;
+  link?: string;
+  data: Date;
+  horaInicio: string;
+  horaTermino: string;
+  contatoId?: string;
+}
 
-// export interface CompromissoExcluidoViewModel {}
+export interface CompromissoExcluidoViewModel {}
 
 export interface ListarCompromissoViewModel {
   id: string;
   assunto: string;
-  data: string;
+  data: Date;
   horaInicio: string;
-  horaTermino: Date;
-  local: string;
-  link: string;
-  contato: string;
+  horaTermino: string;
 }
 
-// export interface VisualizarCompromissoViewModel {
-//   id: string;
-//   nome: string;
-//   email: string;
-//   telefone: string;
-//   empresa: string;
-//   cargo: string;
-// }
+export interface VisualizarCompromissoViewModel {
+  id: string;
+  assunto: string;
+  tipoLocal: TipoLocalizacaoCompromissoEnum;
+  local?: string;
+  link?: string;
+  data: Date;
+  horaInicio: string;
+  horaTermino: string;
+  contato: ListarContatoViewModel;
+}

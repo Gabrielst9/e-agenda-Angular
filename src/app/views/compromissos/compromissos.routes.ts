@@ -1,25 +1,60 @@
-import { ResolveFn, Routes } from "@angular/router";
-import { ListagemCompromissoComponent } from "./listar/listagem-compromisso.component";
-import { ListarCompromissoViewModel } from "./models/compromisso.models";
-import { CompromissoService } from "./services/compromisso.service";
-import { inject } from "@angular/core";
-import { CadastroCompromissoComponent } from "./cadastrar/cadastro-compromisso.component";
+import { ActivatedRouteSnapshot, ResolveFn, Routes } from '@angular/router';
+import {
+  ListarCompromissoViewModel,
+  VisualizarCompromissoViewModel,
+} from './models/compromisso.models';
+import { inject } from '@angular/core';
+import { CompromissoService } from './services/compromisso.service';
+import { CadastroCompromissoComponent } from './cadastrar/cadastro-compromisso.component';
+import { listagemContatosResolver } from '../contatos/services/listagem-contato.resolver';
+import { EdicaoCompromissoComponent } from './editar/edicao-compromisso.component';
+import { ListagemCompromissoComponent } from './listar/listagem-compromisso.component';
+import { ExclusaoCompromissoComponent } from './excluir/exclusao-compromisso.component';
+// import { ExclusaoCompromissoComponent } from './excluir/exclusao-compromisso.component';
 
-const listagemCompromissosResolver: ResolveFn<ListarCompromissoViewModel[]> = () => {
+const listagemCompromissosResolver: ResolveFn<
+  ListarCompromissoViewModel[]
+> = () => {
   return inject(CompromissoService).selecionarTodos();
 };
 
+const visualizarCompromissoResolver: ResolveFn<
+  VisualizarCompromissoViewModel
+> = (route: ActivatedRouteSnapshot) => {
+  const id = route.params['id'];
+
+  return inject(CompromissoService).selecionarPorId(id);
+};
+
 export const compromissosRoutes: Routes = [
-  { path: '', redirectTo: 'listar', pathMatch: 'full' },
+  {
+    path: '',
+    redirectTo: 'listar',
+    pathMatch: 'full',
+  },
   {
     path: 'listar',
     component: ListagemCompromissoComponent,
+    resolve: { compromissos: listagemCompromissosResolver },
+  },
+  {
+    path: 'cadastrar',
+    component: CadastroCompromissoComponent,
+    resolve: { contatos: listagemContatosResolver },
+  },
+  {
+    path: 'editar/:id',
+    component: EdicaoCompromissoComponent,
     resolve: {
-      compromissos: listagemCompromissosResolver,
+      compromisso: visualizarCompromissoResolver,
+      contatos: listagemContatosResolver,
     },
   },
-  { path: 'cadastrar', component: CadastroCompromissoComponent },
-
+  {
+    path: 'excluir/:id',
+    component: ExclusaoCompromissoComponent,
+    resolve: {
+      compromisso: visualizarCompromissoResolver,
+    },
+  },
 ];
-
-

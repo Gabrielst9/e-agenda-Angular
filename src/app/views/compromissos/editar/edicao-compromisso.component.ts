@@ -12,17 +12,19 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import {
-  CompromissoInseridoViewModel,
-  InserirCompromissoViewModel,
-  TipoLocalizacaoCompromissoEnum,
-} from '../models/compromisso.models';
-import { ListarContatoViewModel } from '../../contatos/models/contato.models';
-import { CompromissoService } from '../services/compromisso.service';
 import { NotificacaoService } from '../../../core/notificacao/notificacao.service';
+import { ListarContatoViewModel } from '../../contatos/models/contato.models';
+import {
+  TipoLocalizacaoCompromissoEnum,
+  InserirCompromissoViewModel,
+  CompromissoInseridoViewModel,
+  EditarCompromissoViewModel,
+  CompromissoEditadoViewModel,
+} from '../models/compromisso.models';
+import { CompromissoService } from '../services/compromisso.service';
 
 @Component({
-  selector: 'app-cadastro-compromisso',
+  selector: 'app-edicao-compromisso',
   standalone: true,
   imports: [
     NgIf,
@@ -35,9 +37,9 @@ import { NotificacaoService } from '../../../core/notificacao/notificacao.servic
     MatButtonModule,
     MatSelectModule,
   ],
-  templateUrl: './cadastro-compromisso.component.html',
+  templateUrl: './edicao-compromisso.component.html',
 })
-export class CadastroCompromissoComponent implements OnInit {
+export class EdicaoCompromissoComponent implements OnInit {
   public form: FormGroup;
 
   public opcoesLocal = Object.values(TipoLocalizacaoCompromissoEnum).filter(
@@ -102,6 +104,14 @@ export class CadastroCompromissoComponent implements OnInit {
 
   ngOnInit(): void {
     this.contatos = this.route.snapshot.data['contatos'];
+
+    const compromisso = this.route.snapshot.data['compromisso'];
+
+    this.form.patchValue({
+      ...compromisso,
+      data: new Date(compromisso.data).toISOString().substring(0, 10),
+      contatoId: compromisso.contato.id,
+    });
   }
 
   public gravar() {
@@ -113,17 +123,19 @@ export class CadastroCompromissoComponent implements OnInit {
       return;
     }
 
-    const inserirCompromissoVm: InserirCompromissoViewModel = this.form.value;
+    const id = this.route.snapshot.params['id'];
 
-    this.compromissoService.inserir(inserirCompromissoVm).subscribe({
-      next: (compromissoInserido) => this.processarSucesso(compromissoInserido),
+    const editarCompromissoVm: EditarCompromissoViewModel = this.form.value;
+
+    this.compromissoService.editar(id!, editarCompromissoVm).subscribe({
+      next: (compromissoEditado) => this.processarSucesso(compromissoEditado),
       error: (erro) => this.processarFalha(erro),
     });
   }
 
-  private processarSucesso(compromisso: CompromissoInseridoViewModel): void {
+  private processarSucesso(compromisso: CompromissoEditadoViewModel): void {
     this.notificacaoService.sucesso(
-      `Compromisso "${compromisso.assunto}" cadastrado com sucesso!`
+      `Compromisso "${compromisso.assunto}" editado com sucesso!`
     );
 
     this.router.navigate(['/compromissos', 'listar']);
